@@ -5,12 +5,16 @@
 //Pessoa 2: Rayssa Carasilo
 
 //Professor: Alessandro João Brassanini
-
+/*
 ====================================================
 */
 
 #include <stdio.h>
 #include <string.h>
+
+#define linhas 5
+#define colunas 4
+
 
 // ==========================================
 // FUNCAO DE LOGIN
@@ -150,6 +154,72 @@ printf("\nTDE - Traseiro Externo Direito");
 printf("\nTDI - Traseiro Interno Direito");
 
 printf("\n\n====================================\n");
+}
+
+void matrizes(int pneus[linhas][colunas], int tipoVeiculo){
+    int totalEixos = 0;
+
+    switch(tipoVeiculo){
+        case 1: 
+        totalEixos = 2;
+
+        case 2:
+        totalEixos = 3;
+
+        case 3:
+        totalEixos = 5;
+    }
+
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if (i >= totalEixos) {
+                pneus[i][j] = -1;
+            } else if (i == 0 && (j == 1 || j == 2)) {
+                pneus[i][j] = -1; 
+            } else {
+                pneus[i][j] = 0;  
+            }
+        }
+    }
+}
+
+int fiscalizacaoPneus(int pneus[linhas][colunas], int nFogo){
+    for (int i = 0; i < linhas; i++) {
+        for (int j = 0; j < colunas; j++) {
+            if(pneus[i][j] == nFogo){
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+void cadastroPneus(int pneus[linhas][colunas], int tipoVeiculo){
+    matrizes(pneus, tipoVeiculo);
+    int num;
+
+    int totalEixos = (tipoVeiculo == 1) ? 2 : (tipoVeiculo == 2) ? 3 : 5;
+
+
+    for(int i = 0; i > linhas; i++){
+        for(int j = 0; j > colunas; j++){
+            if(pneus[i][j] == -1){
+                continue;
+            }
+
+            printf("Digite os numeros de fogos para Eixo %d e Posicao %d", i+1, j+1);
+            scanf("%d", &num);
+
+            if(num == 0){
+                printf("Numero invalido, digite um numero maior que zero.\n");
+            } else if (fiscalizacaoPneus(pneus, num)){
+                printf("Numero ja cadastrado, digite outro\n");
+            }
+
+            pneus[i][j] = num;
+        }
+    }
+
 }
 
 // ==========================================
